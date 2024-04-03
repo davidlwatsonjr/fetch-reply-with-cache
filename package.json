@@ -1,5 +1,5 @@
 {
-  "name": "@davidlwatsonjr/fetch-reply-with-cache",
+  "name": "@davidlwatsonjr/fetch-retry-with-cache",
   "version": "1.0.1",
   "description": "Fetch with retry potential and caching",
   "main": "index.js",
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidlwatsonjr/fetch-reply-with-cache.git"
+    "url": "git+https://github.com/davidlwatsonjr/fetch-retry-with-cache.git"
   },
   "keywords": [],
   "author": "@davidlwatsonjr",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/davidlwatsonjr/fetch-reply-with-cache/issues"
+    "url": "https://github.com/davidlwatsonjr/fetch-retry-with-cache/issues"
   },
-  "homepage": "https://github.com/davidlwatsonjr/fetch-reply-with-cache#readme",
+  "homepage": "https://github.com/davidlwatsonjr/fetch-retry-with-cache#readme",
   "dependencies": {
     "eslint": "^8.57.0",
     "eslint-config-google": "^0.14.0",

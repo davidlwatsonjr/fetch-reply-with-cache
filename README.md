@@ -1,11 +1,11 @@
-# fetch-reply-with-cache
+# fetch-retry-with-cache
 
 This project adds retry functionality (using `fetch-retry`) and memory caching functionality to the native Node `fetch` function.
 
 ## Usage
 
 ```js
-const { fetch } = require("@davidlwatsonjr/fetch-reply-with-cache");
+const { fetch } = require("@davidlwatsonjr/fetch-retry-with-cache");
 
 ...
 
