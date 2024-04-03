@@ -1,6 +1,6 @@
 {
   "name": "@davidlwatsonjr/fetch-reply-with-cache",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch with retry potential and caching",
   "main": "index.js",
   "scripts": {
