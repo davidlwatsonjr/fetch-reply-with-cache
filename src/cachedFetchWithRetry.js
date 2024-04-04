@@ -5,7 +5,13 @@ const DEFAULT_RETRY_OPTIONS = {
   retryDelay: (attempt) => Math.pow(2, attempt) * 500,
 };
 
-const DEFAULT_CACHE_LENGTH = 60000;
+const DEFAULT_CACHE_LENGTH = 60;
+
+const { FETCH_CACHE_TTL } = process.env;
+
+const fetchCacheTTL = !isNaN(parseInt(FETCH_CACHE_TTL))
+  ? parseInt(FETCH_CACHE_TTL)
+  : DEFAULT_CACHE_LENGTH;
 
 let fetchFn = global.fetch;
 try {
@@ -37,7 +43,7 @@ const fetchAndCache = async (
   url,
   options,
   cacheKey,
-  cacheTTL = DEFAULT_CACHE_LENGTH,
+  cacheTTL = fetchCacheTTL,
 ) => {
   const fetchResponse = await fetchFn(url, {
     ...DEFAULT_RETRY_OPTIONS,
@@ -47,7 +53,7 @@ const fetchAndCache = async (
   setCachedResponse(cacheKey, responseText);
   setTimeout(() => {
     deleteCachedResponse(cacheKey);
-  }, cacheTTL);
+  }, cacheTTL * 1000);
 
   return responseText;
 };
