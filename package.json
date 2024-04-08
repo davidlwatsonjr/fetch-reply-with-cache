@@ -1,9 +1,10 @@
 {
   "name": "@davidlwatsonjr/fetch-retry-with-cache",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Fetch with retry potential and caching",
   "main": "index.js",
   "scripts": {
+    "deploy": "npm publish",
     "eslint": "eslint",
     "format": "prettier --write \"src/**/*.js\"",
     "format:check": "prettier --check \"src/**/*.js\"",

@@ -39,6 +39,12 @@ const deleteCachedResponse = (cacheKey) => {
   delete memoryCache[cacheKey];
 };
 
+const convertToPartialFetchResponse = ({ ok, text }) => ({
+  ok,
+  text: async () => Promise.resolve(text),
+  json: async () => Promise.resolve(JSON.parse(text)),
+});
+
 const fetchAndCache = async (
   url,
   options,
@@ -49,31 +55,34 @@ const fetchAndCache = async (
     ...DEFAULT_RETRY_OPTIONS,
     ...options,
   });
-  const responseText = await fetchResponse.text();
-  setCachedResponse(cacheKey, responseText);
-  setTimeout(() => {
-    deleteCachedResponse(cacheKey);
-  }, cacheTTL * 1000);
-
-  return responseText;
+  const { ok } = fetchResponse;
+  if (ok) {
+    const text = await fetchResponse.text();
+    setCachedResponse(cacheKey, text);
+    setTimeout(() => {
+      deleteCachedResponse(cacheKey);
+    }, cacheTTL * 1000);
+    return convertToPartialFetchResponse({ ok, text });
+  } else {
+    return { ok: false };
+  }
 };
-
-const convertTextToPartialFetchReponse = (text) => ({
-  ok: async () => Promise.resolve(true),
-  text: async () => Promise.resolve(text),
-  json: async () => Promise.resolve(JSON.parse(text)),
-});
 
 const fetch = async (url, options = {}) => {
   const { cacheTTL, ...fetchOptions } = options;
 
   const cacheKey = getCacheKey({ url, fetchOptions });
 
-  const responseText =
-    getCachedResponse(cacheKey) ||
-    (await fetchAndCache(url, fetchOptions, cacheKey, cacheTTL));
+  const text = getCachedResponse(cacheKey);
 
-  const response = convertTextToPartialFetchReponse(responseText);
+  let response;
+
+  if (text) {
+    const ok = true;
+    response = convertToPartialFetchResponse({ ok, text });
+  } else {
+    response = await fetchAndCache(url, fetchOptions, cacheKey, cacheTTL);
+  }
 
   return Promise.resolve(response);
 };
