@@ -1,6 +1,6 @@
 {
   "name": "@davidlwatsonjr/fetch-retry-with-cache",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Fetch with retry potential and caching",
   "main": "index.js",
   "scripts": {
@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/davidlwatsonjr/fetch-retry-with-cache#readme",
   "devDependencies": {
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.3.3"
   },
   "peerDependencies": {
     "fetch-retry": "^5.0.0"

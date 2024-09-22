@@ -46,25 +46,35 @@ const convertToPartialFetchResponse = ({ ok, text }) => ({
 });
 
 const fetchAndCache = async (
-  url,
+  requestUrl,
   options,
   cacheKey,
   cacheTTL = fetchCacheTTL,
 ) => {
-  const fetchResponse = await fetchFn(url, {
+  const fetchResponse = await fetchFn(requestUrl, {
     ...DEFAULT_RETRY_OPTIONS,
     ...options,
   });
-  const { ok } = fetchResponse;
+  const { headers, ok, redirected, status, statusText, type, url } =
+    fetchResponse;
+  const responseBase = {
+    headers,
+    ok,
+    redirected,
+    status,
+    statusText,
+    type,
+    url,
+  };
   if (ok) {
     const text = await fetchResponse.text();
     setCachedResponse(cacheKey, text);
     setTimeout(() => {
       deleteCachedResponse(cacheKey);
     }, cacheTTL * 1000);
-    return convertToPartialFetchResponse({ ok, text });
+    return convertToPartialFetchResponse({ ...responseBase, text });
   } else {
-    return { ok: false };
+    return responseBase;
   }
 };
 
